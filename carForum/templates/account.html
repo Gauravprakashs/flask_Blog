@@ -1,0 +1,17 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Account </h1>
+    <img class="rounded-circle mx-auto d-block" src="{{ url_for('static', filename='profile_pics/' + current_user.profile_image) }}" alt="Profile Image" width="150" 
+  height="150">
+    <p class="text-center lead">Welcome {{ current_user.username }}.</p>
+
+    </div>
+</div>
+
+{%include 'form_template.html'%}
+
+
+{%endblock%}

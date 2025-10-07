@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Post Header -->
+<div class="jumbotron jumbotron-fluid bg-light border-bottom mb-4">
+  <div class="container">
+    <h2 class="display-4 text-primary">{{ post.title }}</h2>
+    <h5 class="text-muted">Author: <span class="text-dark">{{ post.author.username }}</span></h5>
+    <p class="text-muted">Published On: {{ post.date.strftime('%B %d, %Y') }}</p>
+    <hr>
+    <p class="lead">{{ post.text }}</p>
+
+    {% if post.author == current_user %}
+    <div class="mt-4">
+      <a class="btn btn-outline-warning mr-2" href="{{ url_for('blog_posts.update', blog_post_id=post.id) }}">✏️ Update</a>
+      <button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#del_modal">🗑️ Delete</button>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="del_modal" tabindex="-1" role="dialog" aria-labelledby="del_modal_label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="del_modal_label">Confirm Deletion</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to permanently delete this post?</p>
+      </div>
+      <div class="modal-footer">
+        <form action="{{ url_for('blog_posts.delete_post', blog_post_id=post.id) }}" method="post">
+          <input class="btn btn-danger" type="submit" value="Yes, Delete">
+        </form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
